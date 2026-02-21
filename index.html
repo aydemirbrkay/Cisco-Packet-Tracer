@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Üniversite Kampüs Ağı Tasarımı Projesi</title>
+<style>
+  :root {
+    --primary: #1B3A4B;
+    --secondary: #2E86AB;
+    --accent: #E8E8E8;
+    --text: #333333;
+  }
+
+  @page {
+    size: A4;
+    margin: 2.5cm;
+    @top-right {
+      content: counter(page);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 10pt;
+      color: var(--primary);
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: var(--text);
+    background: #fff;
+    counter-reset: page-counter;
+  }
+
+  section.page {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 60px 80px;
+    position: relative;
+    min-height: 100vh;
+    page-break-after: always;
+    counter-increment: page-counter;
+  }
+
+  section.page:not(.cover)::before {
+    content: "Üniversite Kampüs Ağı Tasarımı Projesi";
+    display: block;
+    font-size: 9pt;
+    color: var(--secondary);
+    text-align: left;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+  }
+
+  section.page:not(.cover)::after {
+    content: counter(page-counter);
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    font-size: 10pt;
+    color: var(--primary);
+    font-weight: bold;
+  }
+
+  section.cover::after { display: none; }
+
+  /* Cover page */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .cover-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .cover-content .academic-year {
+    font-size: 14pt;
+    color: var(--secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .cover-content .semester {
+    font-size: 13pt;
+    color: var(--secondary);
+    letter-spacing: 1px;
+  }
+  .cover-content .title {
+    font-size: 22pt;
+    color: var(--primary);
+    font-weight: bold;
+    margin: 20px 0;
+    line-height: 1.3;
+  }
+  .cover-content .instructor {
+    font-size: 12pt;
+    color: var(--text);
+    margin-top: 10px;
+  }
+  .cover-content .design-label {
+    font-size: 16pt;
+    color: var(--primary);
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: 20px 0;
+    border-top: 2px solid var(--secondary);
+    border-bottom: 2px solid var(--secondary);
+    padding: 10px 30px;
+  }
+  .cover-content .author,
+  .cover-content .student-no {
+    font-size: 12pt;
+    color: var(--text);
+  }
+
+  /* Headings */
+  h1 {
+    font-size: 20pt;
+    color: var(--primary);
+    border-bottom: 3px solid var(--secondary);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+  h2 {
+    font-size: 16pt;
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    margin-top: 28px;
+  }
+  h3 {
+    font-size: 13pt;
+    color: var(--secondary);
+    margin-bottom: 10px;
+    margin-top: 22px;
+  }
+  h4 {
+    font-size: 12pt;
+    color: var(--secondary);
+    font-style: italic;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+
+  p {
+    margin-bottom: 12px;
+    text-align: justify;
+  }
+
+  /* Table of Contents */
+  .toc { list-style: none; padding: 0; }
+  .toc li { padding: 4px 0; }
+  .toc li a {
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px dotted #ccc;
+    display: inline-block;
+    transition: color 0.2s;
+  }
+  .toc li a:hover { color: var(--secondary); }
+  .toc .toc-l1 { font-weight: bold; font-size: 11pt; margin-top: 8px; }
+  .toc .toc-l2 { padding-left: 24px; font-size: 10.5pt; }
+  .toc .toc-l3 { padding-left: 48px; font-size: 10pt; }
+  .toc .toc-l4 { padding-left: 72px; font-size: 10pt; }
+
+  /* Code blocks */
+  pre {
+    background: var(--accent);
+    border: 1px solid #d0d0d0;
+    border-left: 4px solid var(--secondary);
+    border-radius: 3px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    overflow-x: auto;
+    font-size: 9pt;
+    line-height: 1.5;
+  }
+  pre code {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text);
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 9pt;
+  }
+  thead th {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 9pt;
+  }
+  tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  tbody tr:nth-child(even) { background: var(--accent); }
+  tbody tr:hover { background: #dce9f0; }
+
+  /* Utility */
+  ul, ol { margin: 10px 0 10px 30px; }
+  li { margin-bottom: 4px; }
+
+  .note-box {
+    background: var(--accent);
+    border-left: 4px solid var(--secondary);
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-style: italic;
+    font-size: 10pt;
+  }
+
+  .placeholder {
+    background: var(--accent);
+    border: 2px dashed #bbb;
+    padding: 40px 20px;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin: 20px 0;
+  }
+
+  .config-label {
+    font-weight: bold;
+    color: var(--primary);
+    margin-top: 14px;
+    margin-bottom: 4px;
+    font-size: 10pt;
+  }
+
+  @media print {
+    section.page {
+      padding: 0;
+      min-height: auto;
+      max-width: none;
+    }
+    section.page::before,
+    section.page::after {
+      display: none;
+    }
+    body { font-size: 11pt; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER PAGE ==================== -->
+<section class="page cover">
+  <div class="cover-content">
+    <div class="academic-year">2025–2026 AKADEMİK YILI</div>
+    <div class="semester">GÜZ DÖNEMİ</div>
+    <div class="title">Üniversite Kampüs Ağı Tasarımı Projesi</div>
+    <div class="instructor">Ders Sorumlusu: Doç. Dr. Serkan ÖZTÜRK</div>
+    <div class="design-label">DESIGN PROJECT</div>
+    <div class="author">Hazırlayan: Berkay AYDEMİR</div>
+    <div class="student-no">Öğrenci No: 1030521387</div>
+  </div>
+</section>
+
+<!-- ==================== TEŞEKKÜR ==================== -->
+<section class="page" id="tesekkur">
+  <h1>TEŞEKKÜR</h1>
+  <p>Lisans öğrenimim boyunca ve bu mezuniyet tasarım projesinin hazırlık aşamasında gösterdiği her türlü destek ve yardımdan dolayı çok değerli hocam Doç. Dr. Serkan ÖZTÜRK'e en içten dileklerimle teşekkür ederim.</p>
+  <p>Bu çalışma, Erciyes Üniversitesi Bilgisayar Mühendisliği Bölümü bünyesinde Mezuniyet Tasarım Projesi kapsamında hazırlanmıştır.</p>
+  <p style="margin-top: 40px;">3 Ocak 2026<br>Berkay Aydemir</p>
+</section>
+
+<!-- ==================== İÇİNDEKİLER ==================== -->
+<section class="page" id="icindekiler">
+  <h1>İçindekiler</h1>
+  <ul class="toc">
+    <li class="toc-l1"><a href="#s1">1. Projenin Genel Tanımı</a></li>
+    <li class="toc-l2"><a href="#s1-1">1.1 Projenin Amacı</a></li>
+    <li class="toc-l2"><a href="#s1-2">1.2 Kapsam ve Hedefler</a></li>
+    <li class="toc-l2"><a href="#s1-3">1.3 Gereksinimler</a></li>
+    <li class="toc-l3"><a href="#s1-3-1">1.3.1 Mühendislik Fakültesi</a></li>
+    <li class="toc-l3"><a href="#s1-3-2">1.3.2 Tıp Fakültesi</a></li>
+    <li class="toc-l3"><a href="#s1-3-3">1.3.3 Edebiyat Fakültesi</a></li>
+    <li class="toc-l3"><a href="#s1-3-4">1.3.4 Sunucu Odası ve İdari Birimler</a></li>
+    <li class="toc-l1"><a href="#s2">2. Proje İçeriği</a></li>
+    <li class="toc-l2"><a href="#s2-1">2.1 Ağ Topolojisinin Genel Yapısı</a></li>
+    <li class="toc-l2"><a href="#s2-2">2.2 VLAN Yapısı ve Ağ Segmentasyonu</a></li>
+    <li class="toc-l2"><a href="#s2-3">2.3 IP Adres Yönetimi – DHCP Sunucusu</a></li>
+    <li class="toc-l2"><a href="#s2-4">2.4 DNS Sunucusu ve Alan Adı Yönetimi</a></li>
+    <li class="toc-l2"><a href="#s2-5">2.5 Dinamik Yönlendirme – OSPF Yapısı</a></li>
+    <li class="toc-l2"><a href="#s2-6">2.6 Kampüs Dışı Erişim ve Güvenlik Yapısı</a></li>
+    <li class="toc-l2"><a href="#s2-7">2.7 Kablosuz Ağ Yönetimi</a></li>
+    <li class="toc-l2"><a href="#s2-8">2.8 Voice ve QoS Yapısı</a></li>
+    <li class="toc-l2"><a href="#s2-9">2.9 PAT ve ACL</a></li>
+    <li class="toc-l2"><a href="#s2-10">2.10 Site-to-Site VPN</a></li>
+    <li class="toc-l2"><a href="#s2-11">2.11 Test ve Doğrulama</a></li>
+    <li class="toc-l1"><a href="#s3">3. Sonuç</a></li>
+    <li class="toc-l1"><a href="#s4">4. IP Subnetting</a></li>
+    <li class="toc-l2"><a href="#s4-1">4.1 ENG Tarafı IP Subnetting</a></li>
+    <li class="toc-l2"><a href="#s4-2">4.2 Server Tarafı IP Subnetting</a></li>
+    <li class="toc-l2"><a href="#s4-3">4.3 Tıp Fakültesi IP Subnet Tablosu</a></li>
+    <li class="toc-l2"><a href="#s4-4">4.4 Edebiyat Fakültesi IP Subnet Tablosu</a></li>
+    <li class="toc-l2"><a href="#s4-5">4.5 Router Bağlantıları IP Subnet Tablosu</a></li>
+    <li class="toc-l1"><a href="#s5">5. Projenin Kurulduğu Topoloji</a></li>
+    <li class="toc-l1"><a href="#s6">6. Yapılandırmalar</a></li>
+    <li class="toc-l2"><a href="#s6-1">6.1 Temel Cihaz Yapılandırması</a></li>
+    <li class="toc-l2"><a href="#s6-2">6.2 STP PortFast + BPDU Guard Yapılandırması</a></li>
+    <li class="toc-l2"><a href="#s6-3">6.3 Portların VLAN ve TRUNK Yapılandırmaları</a></li>
+    <li class="toc-l2"><a href="#s6-4">6.4 Distribution Layer – VLAN, Trunk ve Port Atamaları</a></li>
+    <li class="toc-l2"><a href="#s6-5">6.5 LACP Yapılandırması</a></li>
+    <li class="toc-l2"><a href="#s6-6">6.6 Port Security – Finans ve Bilgi İşlem Bölümleri</a></li>
+    <li class="toc-l2"><a href="#s6-7">6.7 VoIP için Sub-interface Oluşturma ve IP Atama</a></li>
+    <li class="toc-l2"><a href="#s6-8">6.8 EDB-MLS1 – HSRP Yapılandırması</a></li>
+    <li class="toc-l2"><a href="#s6-9">6.9 IP DHCP Helper</a></li>
+    <li class="toc-l2"><a href="#s6-10">6.10 OSPF Yapılandırması</a></li>
+    <li class="toc-l2"><a href="#s6-11">6.11 VoIP Yapılandırması</a></li>
+    <li class="toc-l3"><a href="#s6-11-1">6.11.1 DHCP Servisi Yapılandırması</a></li>
+    <li class="toc-l3"><a href="#s6-11-2">6.11.2 Interface ve Sub-Interface (VLAN) Yapılandırması</a></li>
+    <li class="toc-l3"><a href="#s6-11-3">6.11.3 Yönlendirme (Routing) Protokolleri</a></li>
+    <li class="toc-l3"><a href="#s6-11-4">6.11.4 Telephony Service (CME) Ayarları</a></li>
+    <li class="toc-l2"><a href="#s6-12">6.12 NAT/PAT</a></li>
+    <li class="toc-l2"><a href="#s6-13">6.13 VPN</a></li>
+    <li class="toc-l1"><a href="#s7">7. Test Aşaması</a></li>
+    <li class="toc-l2"><a href="#s7-1">7.1 DHCP IP Atamasının Doğrulanması</a></li>
+    <li class="toc-l2"><a href="#s7-2">7.2 DNS Test</a></li>
+    <li class="toc-l2"><a href="#s7-3">7.3 PAT / NAT Test</a></li>
+    <li class="toc-l2"><a href="#s7-4">7.4 VPN Test</a></li>
+    <li class="toc-l2"><a href="#s7-5">7.5 HSRP Test</a></li>
+    <li class="toc-l2"><a href="#s7-6">7.6 VoIP Test</a></li>
+    <li class="toc-l3"><a href="#s7-6-1">7.6.1 Hat Numarası Atanmasının Kontrolü</a></li>
+    <li class="toc-l3"><a href="#s7-6-2">7.6.2 Fakülteler Arası İletişim Kontrolü</a></li>
+    <li class="toc-l2"><a href="#s7-7">7.7 ICMP ile Fakültelerin İletişim Kontrolü</a></li>
+    <li class="toc-l2"><a href="#s7-8">7.8 SSH Kontrol Testi</a></li>
+  </ul>
+</section>
+
+<!-- ==================== SECTION 1 ==================== -->
+<section class="page" id="s1">
+  <h1>1. Projenin Genel Tanımı</h1>
+  <p>Bu proje, bir üniversite kampüsü için güvenilir, modüler, ölçeklenebilir ve yüksek erişilebilirlik sunan kurumsal bir ağ altyapısının uçtan uca tasarlanmasını kapsamaktadır. Tasarlanan ağ mimarisi; kampüs genelindeki fakültelerin, akademik bölümlerin, araştırma laboratuvarlarının, idari birimlerin ve sunucu odalarının birbirinden yalıtılmış VLAN segmentleri üzerinden mantıksal olarak ayrılmasını, bu VLAN'lar arasında kontrollü ve yönlendirilebilir bir iletişim kurulmasını ve tüm ağ servislerinin merkezi bir yapıda yönetilmesini hedeflemektedir.</p>
+  <p>Proje kapsamında istemcilere verilecek IP adreslerinin merkezi DHCP sunucusu tarafından dinamik olarak dağıtılması, iç ve dış DNS çözümlemelerinin kurumsal DNS sunucusu üzerinden gerçekleştirilmesi, kampüs içi ve dışı kullanıcıların erciyes.edu.tr gibi kurumsal alan adlarına sorunsuz erişebilmesi sağlanmıştır. Ayrıca, ağ üzerindeki tüm yönlendiriciler ve çok katmanlı anahtarlar arasında OSPF tabanlı dinamik yönlendirme topolojisi oluşturularak, ağın her noktasında en uygun ve en hızlı trafik akışı garanti altına alınmıştır.</p>
+  <p>Güvenlik katmanı kapsamında erişim kontrol listeleri (ACL), port security, SSH erişim kısıtlamaları, BPDU Guard, STP PortFast gibi mekanizmalar uygulanmış; internet çıkışlarında PAT/NAT yapılandırmaları gerçekleştirilmiştir. Kampüsler ile Server Taraf bağlantıları için Site-to-Site IPsec VPN tünelleri kurulmuş olup, verilerin güvenli şekilde taşınması hedeflenmiştir.</p>
+
+  <h2 id="s1-1">1.1 Projenin Amacı</h2>
+  <p>Bu projenin amacı, üniversite kampüsündeki tüm akademik ve idari birimlerin kesintisiz, güvenilir, ölçeklenebilir ve yüksek performanslı bir ağ altyapısına sahip olmasını sağlamaktır. Proje, VLAN segmentasyonu, merkezi yönlendirme, güvenlik mekanizmaları ve kablosuz ağ entegrasyonunu kapsamaktadır.</p>
+
+  <h2 id="s1-2">1.2 Kapsam ve Hedefler</h2>
+  <p>Bu projenin kapsamı; kampüs ağının fiziksel ve mantıksal tasarımının yapılarak Cisco Packet Tracer ortamında simüle edilmesini içerir. Çalışma, temel anahtarlama (VLAN, Voice VLAN) ve yönlendirme (OSPF) protokollerinin yanı sıra; ağ yedekliliği için HSRP, IP adres yönetimi için DHCP/DNS servisleri ve uzaktan güvenli erişim için Site-to-Site VPN yapılarının uçtan uca konfigürasyonunu kapsamaktadır.</p>
+
+  <h2 id="s1-3">1.3 Gereksinimler</h2>
+
+  <h3 id="s1-3-1">1.3.1 Mühendislik Fakültesi</h3>
+  <p>IP adresi 192.168.10.0'dan başlayarak, A Blok için maksimum 252 kullanıcı, B Blok için maksimum 62 kullanıcı, C Blok için ise maksimum 30 kullanıcının bağlanacağı bir ağın oluşturulması gerekmektedir.</p>
+  <p>Her bölüm için:</p>
+  <ul>
+    <li>1 adet VoIP telefon bağlantısı</li>
+    <li>1 adet AP (Access Point)</li>
+    <li>1 adet Yazıcı</li>
+    <li>Kablolu ve kablosuz bağlantılı bilgisayar bağlantısı</li>
+  </ul>
+
+  <h3 id="s1-3-2">1.3.2 Tıp Fakültesi</h3>
+  <p>Her fakülte için maksimum 62 kullanıcı, 1 adet LAP (Lightweight Access Point) WLC bağlantısı için, kablolu ve kablosuz bağlantılı bilgisayar bağlantısı ve akıllı cihazlar.</p>
+
+  <h3 id="s1-3-3">1.3.3 Edebiyat Fakültesi</h3>
+  <p>Her fakülte için maksimum 62 kullanıcı, 1 adet LAP (Lightweight Access Point) WLC bağlantısı için, kablolu ve kablosuz bağlantılı bilgisayar bağlantısı ve akıllı cihazlar.</p>
+
+  <h3 id="s1-3-4">1.3.4 Sunucu Odası ve İdari Birimler</h3>
+  <p>Server odasında olması gerekenler:</p>
+  <ul>
+    <li>1 adet WEB Server</li>
+    <li>1 adet E-Mail Server</li>
+    <li>1 adet DNS Server</li>
+    <li>2 adet DHCP Server</li>
+  </ul>
+  <p>Bilgi İşlem ve Finans Bölümünde olması gerekenler:</p>
+  <ul>
+    <li>1 adet Yazıcı</li>
+    <li>1 adet VoIP telefon bağlantısı</li>
+    <li>1 adet AP (Access Point)</li>
+    <li>Kablolu ve kablosuz bağlantılı bilgisayar bağlantısı</li>
+  </ul>
+</section>
+
+<!-- ==================== SECTION 2 ==================== -->
+<section class="page" id="s2">
+  <h1>2. Proje İçeriği</h1>
+
+  <h2 id="s2-1">2.1 Ağ Topolojisinin Genel Yapısı</h2>
+  <p>Proje çok katmanlı bir ağ tasarımı üzerine kuruludur:</p>
+  <p><strong>Core Layer:</strong> Tüm yönlendiricilerin ve ana switch'lerin birbirine en yüksek hızda bağlandığı, ağın omurgasını oluşturan katmandır. Trafik burada yönlendirilir ve dağıtım katmanına aktarılır.</p>
+  <p><strong>Distribution Layer:</strong> Her fakülte veya birimin VLAN trafiğini core'a ileten ve erişim katmanına servis sağlayan yapıdadır. Burada yönlendirme, güvenlik politikaları ve VLANlar arası iletişim kontrol edilir.</p>
+  <p><strong>Access Layer:</strong> Son kullanıcıların, laboratuvarların, sınıfların ve ofis cihazlarının ağa bağlandığı katmandır. Port bazlı VLAN tanımları bu katmanda yapılır.</p>
+
+  <h2 id="s2-2">2.2 VLAN Yapısı ve Ağ Segmentasyonu</h2>
+  <p>Kampüs içindeki her fakülte ve her idari birim için ayrı bir VLAN belirlenmiştir. Her VLAN kendi IP aralığı ile tanımlanmış ve DHCP tarafından yönetilmektedir.</p>
+
+  <h2 id="s2-3">2.3 IP Adres Yönetimi – DHCP Sunucusu</h2>
+  <p>Ağ içerisindeki tüm uç cihazlara IP adresleri merkezî bir DHCP Server tarafından atanır. Server odası kendi içinde IP ataması statik olarak atanmıştır. Her VLAN için ayrı DHCP havuzları oluşturulmuştur, DHCP relay (IP helper) yapılandırması sayesinde VLAN'lar üzerinden DHCP sunucusuna erişim sağlanır.</p>
+
+  <h2 id="s2-4">2.4 DNS Sunucusu ve Alan Adı Yönetimi</h2>
+  <p>Kampüs içerisinde kurumsal bir DNS Sunucusu yapılandırılmıştır. DNS üzerinde 'erü.öbs' alan adı tanımlıdır.</p>
+
+  <h2 id="s2-5">2.5 Dinamik Yönlendirme – OSPF Yapısı</h2>
+  <p>Ağ yönlendirmesi tüm router'larda OSPF (Open Shortest Path First) protokolü ile sağlanmıştır.</p>
+
+  <h2 id="s2-6">2.6 Kampüs Dışı Erişim ve Güvenlik Yapısı</h2>
+  <p>Dış dünyadan gelen kullanıcılar kampüs web sitelerine internet üzerinden erişebilmektedir. İç trafik ile dış trafik arasında güvenlik politikaları farklılaştırılmıştır: NAT yapılandırması, ACL tabanlı erişim kontrolü. Bu sayede hem iç iletişim korunur hem de dış erişim kararlı ve güvenli bir yapıda sunulur.</p>
+
+  <h2 id="s2-7">2.7 Kablosuz Ağ Yönetimi</h2>
+  <ul>
+    <li>WLC üzerinden SSID ve VLAN eşleştirmesi</li>
+    <li>AP'lerin controller'a bağlanması</li>
+    <li>WPA2 güvenliği</li>
+  </ul>
+
+  <h2 id="s2-8">2.8 Voice ve QoS Yapısı</h2>
+  <ul>
+    <li>Voice VLAN (200) arasında VoIP haberleşme</li>
+    <li>IP telefonların otomatik hat numarası alması</li>
+  </ul>
+
+  <h2 id="s2-9">2.9 PAT ve ACL</h2>
+  <ul>
+    <li>NAT/PAT ile internet çıkışı</li>
+    <li>İç ve dış trafik için ACL kuralları</li>
+  </ul>
+
+  <h2 id="s2-10">2.10 Site-to-Site VPN</h2>
+  <p>Fakülteler ile Server Tarafının haberleşmesinin, genel internet trafiğinden izole edilerek güvenli bir sanal ağ üzerinden gerçekleştirilmesini sağlamaktadır.</p>
+
+  <h2 id="s2-11">2.11 Test ve Doğrulama</h2>
+  <ul>
+    <li>DHCP ataması kontrol testi</li>
+    <li>DNS erişim testi</li>
+    <li>PAT/NAT testi</li>
+    <li>VPN doğrulama</li>
+    <li>HSRP uygulaması doğrulama</li>
+    <li>VoIP hat ataması doğrulama</li>
+    <li>VoIP arama testi</li>
+  </ul>
+</section>
+
+<!-- ==================== SECTION 3 ==================== -->
+<section class="page" id="s3">
+  <h1>3. Sonuç</h1>
+  <p>Bu proje kapsamında, bir üniversite kampüsünün ihtiyaç duyduğu tüm ağ gereksinimleri analiz edilmiş ve simülasyon ortamında başarıyla hayata geçirilmiştir. Tasarlanan mimari sonucunda elde edilen temel kazanımlar şunlardır:</p>
+
+  <p><strong>Yüksek Erişilebilirlik ve Süreklilik:</strong> HSRP protokolü ve yedekli hatlar sayesinde, olası bir router veya hat arızasında bile ağın kesintisiz çalışmaya devam etmesi sağlanmıştır.</p>
+
+  <p><strong>Güvenlik ve İzolasyon:</strong> Fakülteler ve birimler VLAN yapısıyla mantıksal olarak birbirinden izole edilmiş, Site-to-Site VPN ile uzaktan güvenli erişim altyapısı kurulmuştur.</p>
+
+  <p><strong>Yönetilebilirlik:</strong> OSPF protokolü ile ağdaki değişikliklere hızlı adapte olunabilen, DHCP ile IP yönetiminin otomatikleştiği dinamik bir yapı oluşturulmuştur.</p>
+
+  <p>Sonuç olarak; ölçeklenebilir, modern ve güvenli bir ağ topolojisi oluşturulmuş ve sistemin gerçek hayat senaryolarına uygunluğu test edilerek doğrulanmıştır.</p>
+</section>
+
+<!-- ==================== SECTION 4 ==================== -->
+<section class="page" id="s4">
+  <h1>4. IP Subnetting</h1>
+
+  <h2 id="s4-1">4.1 ENG Tarafı IP Subnetting</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Network &amp; Subnet Mask</th>
+        <th>Valid Host Address</th>
+        <th>Default Gateway</th>
+        <th>Broadcast Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>İNŞAAT MÜH</td><td>192.168.10.0/24</td><td>192.168.10.1–192.168.10.254</td><td>192.168.10.1</td><td>192.168.10.255</td></tr>
+      <tr><td>MAKİNE MÜH</td><td>192.168.11.0/24</td><td>192.168.11.1–192.168.11.254</td><td>192.168.11.1</td><td>192.168.11.255</td></tr>
+      <tr><td>EE MÜH</td><td>192.168.12.0/24</td><td>192.168.12.1–192.168.12.254</td><td>192.168.12.1</td><td>192.168.12.255</td></tr>
+      <tr><td>BİLG MÜH</td><td>192.168.13.0/24</td><td>192.168.13.1–192.168.13.254</td><td>192.168.13.1</td><td>192.168.13.255</td></tr>
+      <tr><td>YAZILIM MÜH</td><td>192.168.14.0/26</td><td>192.168.14.1–192.168.14.62</td><td>192.168.14.1</td><td>192.168.14.63</td></tr>
+      <tr><td>ENDÜS MÜH</td><td>192.168.14.64/26</td><td>192.168.14.65–192.168.14.126</td><td>192.168.14.65</td><td>192.168.14.127</td></tr>
+      <tr><td>ÇEVRE MÜH</td><td>192.168.14.128/26</td><td>192.168.14.129–192.168.14.190</td><td>192.168.14.129</td><td>192.168.14.191</td></tr>
+      <tr><td>MEKAT MÜH</td><td>192.168.14.192/26</td><td>192.168.14.193–192.168.14.254</td><td>192.168.14.193</td><td>192.168.14.255</td></tr>
+      <tr><td>HARİTA MÜH</td><td>192.168.15.0/27</td><td>192.168.15.1–192.168.15.30</td><td>192.168.15.1</td><td>192.168.15.31</td></tr>
+      <tr><td>BİYOMED MÜH</td><td>192.168.15.32/27</td><td>192.168.15.33–192.168.15.62</td><td>192.168.15.33</td><td>192.168.15.63</td></tr>
+      <tr><td>GIDA MÜH</td><td>192.168.15.64/27</td><td>192.168.15.65–192.168.15.94</td><td>192.168.15.65</td><td>192.168.15.95</td></tr>
+      <tr><td>TEKSTİL MÜH</td><td>192.168.15.96/27</td><td>192.168.15.97–192.168.15.126</td><td>192.168.15.97</td><td>192.168.15.127</td></tr>
+      <tr><td>ENERJİ MÜH</td><td>192.168.15.128/27</td><td>192.168.15.129–192.168.15.158</td><td>192.168.15.129</td><td>192.168.15.159</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s4-2">4.2 Server Tarafı IP Subnetting</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Network &amp; Subnet Mask</th>
+        <th>Valid Host Address</th>
+        <th>Default Gateway</th>
+        <th>Broadcast Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>BİLGİ İŞLEM</td><td>192.168.16.0/24</td><td>192.168.16.1–192.168.16.254</td><td>192.168.16.1</td><td>192.168.16.255</td></tr>
+      <tr><td>FİNANS</td><td>192.168.17.0/24</td><td>192.168.17.1–192.168.17.254</td><td>192.168.17.1</td><td>192.168.17.255</td></tr>
+      <tr><td>SERVER ROOM</td><td>192.168.18.0/28</td><td>192.168.18.1–192.168.18.14</td><td>192.168.18.1</td><td>192.168.18.15</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s4-3">4.3 Tıp Fakültesi IP Subnet Tablosu</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Network &amp; Subnet Mask</th>
+        <th>Valid Host Address</th>
+        <th>Default Gateway</th>
+        <th>Broadcast Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>TIP-LAB</td><td>192.168.20.0/26</td><td>192.168.20.1–192.168.20.62</td><td>192.168.20.1</td><td>192.168.20.63</td></tr>
+      <tr><td>TIP-RADYOLOJİ</td><td>192.168.20.64/26</td><td>192.168.20.65–192.168.20.126</td><td>192.168.20.65</td><td>192.168.20.127</td></tr>
+      <tr><td>TIP-ANATOMİ</td><td>192.168.20.128/26</td><td>192.168.20.129–192.168.20.190</td><td>192.168.20.129</td><td>192.168.20.191</td></tr>
+      <tr><td>TIP-FARMA</td><td>192.168.20.192/26</td><td>192.168.20.193–192.168.20.254</td><td>192.168.20.193</td><td>192.168.20.255</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s4-4">4.4 Edebiyat Fakültesi IP Subnet Tablosu</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>Network &amp; Subnet Mask</th>
+        <th>Valid Host Address</th>
+        <th>Default Gateway</th>
+        <th>Broadcast Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>EDB-TDE</td><td>192.168.21.0/26</td><td>192.168.21.1–192.168.21.62</td><td>192.168.21.1</td><td>192.168.21.63</td></tr>
+      <tr><td>EDB-RDE</td><td>192.168.21.64/26</td><td>192.168.21.65–192.168.21.126</td><td>192.168.21.65</td><td>192.168.21.127</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="s4-5">4.5 Router Bağlantıları IP Subnet Tablosu</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Kaynak (Router)</th>
+        <th>Hedef (Cihaz)</th>
+        <th>IP Address Range</th>
+        <th>Network &amp; Subnet Mask</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>XYZ-ENG-R</td><td>ENG-MLS1</td><td>172.16.20.1–172.16.20.2</td><td>172.16.20.0/30</td></tr>
+      <tr><td>XYZ-ENG-R</td><td>ENG-MLS2</td><td>172.16.20.5–172.16.20.6</td><td>172.16.20.4/30</td></tr>
+      <tr><td>XYZ-ENG-R</td><td>Safari</td><td>100.200.190.1–100.200.190.2</td><td>100.200.190.0/30</td></tr>
+      <tr><td>XYZ-ENG-R</td><td>Firefox</td><td>100.200.190.5–100.200.190.6</td><td>100.200.190.4/30</td></tr>
+      <tr><td>XYZ-ENG-R</td><td>XYZ-EDEBIYAT-R</td><td>100.200.180.5–100.200.180.6</td><td>100.200.180.4/30</td></tr>
+      <tr><td>XYZ-ENG-R</td><td>XYZ-TIP-R</td><td>100.200.180.1–100.200.180.2</td><td>100.200.180.0/30</td></tr>
+      <tr><td>XYZ-SERVER-R</td><td>Safari</td><td>100.200.190.9–100.200.190.10</td><td>100.200.190.8/30</td></tr>
+      <tr><td>XYZ-SERVER-R</td><td>Firefox</td><td>100.200.190.13–100.200.190.14</td><td>100.200.190.12/30</td></tr>
+      <tr><td>XYZ-SERVER-R</td><td>SERVER-MLS1</td><td>172.16.40.1–172.16.40.2</td><td>172.16.40.0/30</td></tr>
+      <tr><td>XYZ-SERVER-R</td><td>SERVER-MLS2</td><td>172.16.40.5–172.16.40.6</td><td>172.16.40.4/30</td></tr>
+      <tr><td>XYZ-SERVER-R</td><td>VOICE-R</td><td>10.10.200.1–10.10.200.254</td><td>10.10.200.0/24</td></tr>
+      <tr><td>XYZ-EDEBIYAT-R</td><td>EDB-MLS1</td><td>172.16.10.1–172.16.10.2</td><td>172.16.10.0/30</td></tr>
+      <tr><td>XYZ-EDEBIYAT-R</td><td>EDB-MLS2</td><td>172.16.10.5–172.16.10.6</td><td>172.16.10.4/30</td></tr>
+      <tr><td>XYZ-TIP-R</td><td>TIP-MLS1</td><td>172.16.30.1–172.16.30.2</td><td>172.16.30.0/30</td></tr>
+      <tr><td>XYZ-TIP-R</td><td>TIP-MLS2</td><td>172.16.30.5–172.16.30.6</td><td>172.16.30.4/30</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== SECTION 5 ==================== -->
+<section class="page" id="s5">
+  <h1>5. Projenin Kurulduğu Topoloji</h1>
+  <div class="placeholder">Topoloji şeması için PDF dosyasına bakınız.</div>
+</section>
+
+<!-- ==================== SECTION 6 ==================== -->
+<section class="page" id="s6">
+  <h1>6. Yapılandırmalar</h1>
+
+  <h2 id="s6-1">6.1 Temel Cihaz Yapılandırması</h2>
+  <p>Aşağıdaki yapılandırma tüm ağ cihazlarına temel güvenlik ve erişim ayarlarını uygulamak için kullanılmıştır:</p>
+  <pre><code>en
+conf t
+hostname hostname-sw
+line console 0
+password cisco
+login
+exit
+enable secret cisco
+banner motd !! yalnizca bilgi islem tarafindan erisilebilir !!
+no ip domain-lookup
+service password-encryption
+ip domain-name xyz.net
+username admin password cisco
+crypto key generate rsa
+1024
+ip ssh version 2
+access-list 2 permit 192.168.16.0 0.0.0.255
+access-list 2 deny any
+line vty 0 15
+login local
+transport input ssh
+access-class 2 in
+exit
+do wr</code></pre>
+
+  <h2 id="s6-2">6.2 STP PortFast + BPDU Guard Yapılandırması</h2>
+  <p>BPDU Guard, bir PortFast etkin porta BPDU geldiğinde portu otomatik olarak kapatarak ağ döngülerini engeller. Son kullanıcı portlarında aktif edilmelidir:</p>
+  <pre><code>TIP-MLS2(config)#int gigabitEthernet 1/0/6
+TIP-MLS2(config-if)#spanning-tree portfast
+TIP-MLS2(config-if)#spanning-tree bpduguard enable
+TIP-MLS2(config-if)#exit
+TIP-MLS2(config)#do wr</code></pre>
+
+  <h2 id="s6-3">6.3 Portların VLAN ve TRUNK Yapılandırmaları</h2>
+  <p>VLAN tanımları, trunk portları, access ve voice VLAN atamaları, blackhole VLAN yapılandırması aşağıda verilmiştir.</p>
+
+  <h3>VLAN Tanımları</h3>
+  <pre><code>vlan 10
+ name INSAAT
+vlan 20
+ name MAKINE
+vlan 30
+ name EE
+vlan 40
+ name BILGISAYAR
+vlan 50
+ name YAZILIM
+vlan 60
+ name ENDUSTRI
+vlan 70
+ name CEVRE
+vlan 80
+ name MEKATRONIK
+vlan 90
+ name HARITA
+vlan 100
+ name BIYOMED
+vlan 110
+ name GIDA
+vlan 120
+ name TEKSTIL
+vlan 130
+ name ENERJI
+vlan 199
+ name BLACKHOLE
+vlan 200
+ name VOICE</code></pre>
+
+  <h3>Trunk Port Yapılandırması</h3>
+  <pre><code>interface GigabitEthernet1/0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,200
+!</code></pre>
+
+  <h3>Access ve Voice VLAN Ataması (İnşaat Mühendisliği Örneği)</h3>
+  <pre><code>interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+ switchport voice vlan 200
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!</code></pre>
+
+  <h3>Blackhole VLAN – Kullanılmayan Portlar</h3>
+  <pre><code>interface range FastEthernet0/5-24
+ switchport mode access
+ switchport access vlan 199
+ shutdown</code></pre>
+
+  <h3>WLAN VLAN Yapılandırması</h3>
+  <pre><code>interface FastEthernet0/3
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable</code></pre>
+
+  <h2 id="s6-4">6.4 Distribution Layer – VLAN, Trunk ve Port Atamaları</h2>
+  <p>ENG-MLS2 trunk port yapılandırması ve tüm VLAN tanımları (10–130, 199, 200):</p>
+  <pre><code>interface GigabitEthernet1/0/1
+ switchport trunk allowed vlan 10,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/2
+ switchport trunk allowed vlan 20,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/3
+ switchport trunk allowed vlan 30,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/4
+ switchport trunk allowed vlan 40,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/5
+ switchport trunk allowed vlan 50,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/6
+ switchport trunk allowed vlan 60,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/7
+ switchport trunk allowed vlan 70,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/8
+ switchport trunk allowed vlan 80,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/9
+ switchport trunk allowed vlan 90,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/10
+ switchport trunk allowed vlan 100,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/11
+ switchport trunk allowed vlan 110,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/12
+ switchport trunk allowed vlan 120,200
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/13
+ switchport trunk allowed vlan 130,200
+ switchport mode trunk</code></pre>
+
+  <h2 id="s6-5">6.5 LACP Yapılandırması</h2>
+  <p>EtherChannel (LACP), birden fazla fiziksel bağlantıyı tek bir mantıksal bağlantı olarak birleştirerek bant genişliğini artırır ve yedeklilik sağlar.</p>
+
+  <h3>ENG-MLS1 Yapılandırması</h3>
+  <pre><code>interface range GigabitEthernet1/0/23-24
+ channel-group 1 mode active
+!
+interface Port-channel1
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,80,90,100,110,120,130,199,200
+ switchport mode trunk</code></pre>
+
+  <h3>ENG-MLS2 Yapılandırması</h3>
+  <pre><code>interface range GigabitEthernet1/0/23-24
+ channel-group 1 mode passive
+!
+interface Port-channel1
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,80,90,100,110,120,130,199,200
+ switchport mode trunk</code></pre>
+
+  <h2 id="s6-6">6.6 Port Security – Finans ve Bilgi İşlem Bölümleri</h2>
+  <p>Port security, belirli portlara bağlanabilecek MAC adreslerini sınırlandırarak yetkisiz erişimi engeller:</p>
+  <pre><code>interface FastEthernet0/1
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 2
+ switchport port-security mac-address sticky
+ switchport port-security violation shutdown</code></pre>
+
+  <h2 id="s6-7">6.7 VoIP için Sub-interface Oluşturma ve IP Atama</h2>
+  <p>Voice VLAN trafiğini yönlendirmek için router üzerinde sub-interface oluşturulmuştur:</p>
+  <pre><code>interface GigabitEthernet0/0.200
+ encapsulation dot1Q 200
+ ip address 10.10.201.1 255.255.255.0</code></pre>
+
+  <h2 id="s6-8">6.8 EDB-MLS1 – HSRP Yapılandırması</h2>
+  <p>HSRP (Hot Standby Router Protocol), varsayılan ağ geçidinde yedeklilik sağlayarak ağın kesintisiz çalışmasını garanti eder. Aktif ve standby router'lar sanal bir IP adresi paylaşır.</p>
+
+  <h3>EDB-MLS1 (Active)</h3>
+  <pre><code>interface Vlan140
+ ip address 192.168.21.1 255.255.255.192
+ standby 1 ip 192.168.21.3
+ standby 1 priority 150
+ standby 1 preempt
+!
+interface Vlan150
+ ip address 192.168.21.65 255.255.255.192
+ standby 2 ip 192.168.21.67
+ standby 2 priority 150
+ standby 2 preempt</code></pre>
+
+  <h3>EDB-MLS2 (Standby)</h3>
+  <pre><code>interface Vlan140
+ ip address 192.168.21.2 255.255.255.192
+ standby 1 ip 192.168.21.3
+ standby 1 priority 100
+!
+interface Vlan150
+ ip address 192.168.21.66 255.255.255.192
+ standby 2 ip 192.168.21.67
+ standby 2 priority 100</code></pre>
+
+  <h2 id="s6-9">6.9 IP DHCP Helper</h2>
+  <p>DHCP relay (ip helper-address) yapılandırması ile farklı VLAN'lardaki istemciler merkezi DHCP sunucusuna ulaşabilir:</p>
+
+  <h3>VLAN 10–40 DHCP Helper</h3>
+  <pre><code>interface Vlan10
+ ip helper-address 192.168.18.11
+!
+interface Vlan20
+ ip helper-address 192.168.18.11
+!
+interface Vlan30
+ ip helper-address 192.168.18.11
+!
+interface Vlan40
+ ip helper-address 192.168.18.11</code></pre>
+
+  <h3>MLS VLAN Interface Yapılandırmaları (Vlan10–Vlan130, Vlan200)</h3>
+  <pre><code>interface Vlan10
+ mac-address 0040.0b50.6401
+ ip address 192.168.10.1 255.255.255.0
+ ip helper-address 192.168.18.11
+!
+interface Vlan20
+ mac-address 0040.0b50.6402
+ ip address 192.168.11.1 255.255.255.0
+ ip helper-address 192.168.18.11
+!
+interface Vlan30
+ mac-address 0040.0b50.6403
+ ip address 192.168.12.1 255.255.255.0
+ ip helper-address 192.168.18.11
+!
+interface Vlan40
+ mac-address 0040.0b50.6404
+ ip address 192.168.13.1 255.255.255.0
+ ip helper-address 192.168.18.11
+!
+interface Vlan50
+ mac-address 0040.0b50.6405
+ ip address 192.168.14.1 255.255.255.192
+ ip helper-address 192.168.18.11
+!
+interface Vlan60
+ mac-address 0040.0b50.6406
+ ip address 192.168.14.65 255.255.255.192
+ ip helper-address 192.168.18.11
+!
+interface Vlan70
+ mac-address 0040.0b50.6407
+ ip address 192.168.14.129 255.255.255.192
+ ip helper-address 192.168.18.11
+!
+interface Vlan80
+ mac-address 0040.0b50.6408
+ ip address 192.168.14.193 255.255.255.192
+ ip helper-address 192.168.18.11
+!
+interface Vlan90
+ mac-address 0040.0b50.6409
+ ip address 192.168.15.1 255.255.255.224
+ ip helper-address 192.168.18.11
+!
+interface Vlan100
+ mac-address 0040.0b50.640a
+ ip address 192.168.15.33 255.255.255.224
+ ip helper-address 192.168.18.11
+!
+interface Vlan110
+ mac-address 0040.0b50.640b
+ ip address 192.168.15.65 255.255.255.224
+ ip helper-address 192.168.18.11
+!
+interface Vlan120
+ mac-address 0040.0b50.640c
+ ip address 192.168.15.97 255.255.255.224
+ ip helper-address 192.168.18.11
+!
+interface Vlan130
+ mac-address 0040.0b50.640d
+ ip address 192.168.15.129 255.255.255.224
+ ip helper-address 192.168.18.11
+!
+interface Vlan200
+ mac-address 0040.0b50.640e
+ ip address 10.10.201.1 255.255.255.0
+ ip helper-address 192.168.18.11</code></pre>
+
+  <h2 id="s6-10">6.10 OSPF Yapılandırması</h2>
+  <p>OSPF (Open Shortest Path First) dinamik yönlendirme protokolü tüm router ve MLS cihazlarında yapılandırılmıştır. Wildcard mask, subnet mask'ın tersidir (ör. 255.255.255.0 → 0.0.0.255).</p>
+  <pre><code>router ospf 1
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.11.0 0.0.0.255 area 0
+ network 192.168.12.0 0.0.0.255 area 0
+ network 192.168.13.0 0.0.0.255 area 0
+ network 192.168.14.0 0.0.0.63 area 0
+ network 192.168.14.64 0.0.0.63 area 0
+ network 192.168.14.128 0.0.0.63 area 0
+ network 192.168.14.192 0.0.0.63 area 0
+ network 192.168.15.0 0.0.0.31 area 0
+ network 192.168.15.32 0.0.0.31 area 0
+ network 192.168.15.64 0.0.0.31 area 0
+ network 192.168.15.96 0.0.0.31 area 0
+ network 192.168.15.128 0.0.0.31 area 0
+ network 172.16.20.0 0.0.0.3 area 0
+ network 172.16.20.4 0.0.0.3 area 0
+ network 10.10.201.0 0.0.0.255 area 0</code></pre>
+</section>
+
+<!-- ==================== SECTION 6 (continued) ==================== -->
+<section class="page">
+  <h2 id="s6-11">6.11 VoIP Yapılandırması</h2>
+
+  <h3 id="s6-11-1">6.11.1 DHCP Servisi Yapılandırması</h3>
+  <p>Voice Router üzerinde VoIP cihazları için DHCP havuzları oluşturulmuştur:</p>
+  <pre><code>ip dhcp pool VOICE-ENG
+ network 10.10.201.0 255.255.255.0
+ default-router 10.10.201.1
+ option 150 ip 10.10.201.1
+!
+ip dhcp pool VOICE-SERVER
+ network 10.10.202.0 255.255.255.0
+ default-router 10.10.202.1
+ option 150 ip 10.10.202.1
+!
+ip dhcp pool VOICE-EDEBIYAT
+ network 10.10.203.0 255.255.255.0
+ default-router 10.10.203.1
+ option 150 ip 10.10.203.1
+!
+ip dhcp pool VOICE-TIP
+ network 10.10.204.0 255.255.255.0
+ default-router 10.10.204.1
+ option 150 ip 10.10.204.1</code></pre>
+
+  <h3 id="s6-11-2">6.11.2 Interface ve Sub-Interface (VLAN) Yapılandırması</h3>
+  <p>VoIP sub-interface yapılandırması için bkz. <a href="#s6-7">Bölüm 6.7</a>.</p>
+
+  <h3 id="s6-11-3">6.11.3 Yönlendirme (Routing) Protokolleri</h3>
+  <pre><code>router ospf 1
+ network 10.10.200.0 0.0.0.255 area 0
+ network 10.10.201.0 0.0.0.255 area 0
+ network 10.10.202.0 0.0.0.255 area 0
+ network 10.10.203.0 0.0.0.255 area 0
+ network 10.10.204.0 0.0.0.255 area 0
+!
+ip route 0.0.0.0 0.0.0.0 10.10.200.1</code></pre>
+
+  <h3 id="s6-11-4">6.11.4 Telephony Service (CME) Ayarları</h3>
+  <pre><code>telephony-service
+ max-dn 20
+ max-ephones 20
+ ip source-address 10.10.201.1 port 2000
+ auto assign 1 to 20
+!
+ephone-dn 1
+ number 1001
+!
+ephone-dn 2
+ number 1002
+!
+ephone-dn 3
+ number 1003
+!
+ephone-dn 4
+ number 1004
+!
+ephone-dn 5
+ number 2001
+!
+ephone-dn 6
+ number 2002
+!
+ephone-dn 7
+ number 3001
+!
+ephone-dn 8
+ number 3002
+!
+ephone-dn 9
+ number 4001
+!
+ephone-dn 10
+ number 4002</code></pre>
+
+  <h2 id="s6-12">6.12 NAT/PAT</h2>
+  <p>PAT (Port Address Translation), birden fazla iç IP adresini tek bir dış IP adresi üzerinden internete çıkarmak için kullanılır:</p>
+  <pre><code>ip nat inside source list 1 interface GigabitEthernet0/0 overload
+!
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.11.0 0.0.0.255
+access-list 1 permit 192.168.12.0 0.0.0.255
+access-list 1 permit 192.168.13.0 0.0.0.255
+access-list 1 permit 192.168.14.0 0.0.0.255
+access-list 1 permit 192.168.15.0 0.0.0.255
+access-list 1 permit 192.168.16.0 0.0.0.255
+access-list 1 permit 192.168.17.0 0.0.0.255
+access-list 1 permit 192.168.18.0 0.0.0.15
+!
+interface GigabitEthernet0/0
+ ip nat outside
+!
+interface GigabitEthernet0/1
+ ip nat inside
+!
+interface GigabitEthernet0/2
+ ip nat inside</code></pre>
+
+  <h2 id="s6-13">6.13 VPN</h2>
+  <p>Site-to-Site IPsec VPN yapılandırması ile kampüsler arası güvenli iletişim sağlanmıştır:</p>
+
+  <h3>XYZ-ENG-R Yapılandırması</h3>
+  <pre><code>license boot module c2900 technology-package securityk9
+!
+access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.16.0 0.0.0.255
+access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.17.0 0.0.0.255
+access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.18.0 0.0.0.15
+access-list 100 permit ip 192.168.11.0 0.0.0.255 192.168.16.0 0.0.0.255
+access-list 100 permit ip 192.168.11.0 0.0.0.255 192.168.17.0 0.0.0.255
+access-list 100 permit ip 192.168.11.0 0.0.0.255 192.168.18.0 0.0.0.15
+access-list 100 permit ip 192.168.12.0 0.0.0.255 192.168.16.0 0.0.0.255
+access-list 100 permit ip 192.168.12.0 0.0.0.255 192.168.17.0 0.0.0.255
+access-list 100 permit ip 192.168.12.0 0.0.0.255 192.168.18.0 0.0.0.15
+access-list 100 permit ip 192.168.13.0 0.0.0.255 192.168.16.0 0.0.0.255
+access-list 100 permit ip 192.168.13.0 0.0.0.255 192.168.17.0 0.0.0.255
+access-list 100 permit ip 192.168.13.0 0.0.0.255 192.168.18.0 0.0.0.15
+access-list 100 permit ip 192.168.14.0 0.0.0.255 192.168.16.0 0.0.0.255
+access-list 100 permit ip 192.168.14.0 0.0.0.255 192.168.17.0 0.0.0.255
+access-list 100 permit ip 192.168.14.0 0.0.0.255 192.168.18.0 0.0.0.15
+access-list 100 permit ip 192.168.15.0 0.0.0.255 192.168.16.0 0.0.0.255
+access-list 100 permit ip 192.168.15.0 0.0.0.255 192.168.17.0 0.0.0.255
+access-list 100 permit ip 192.168.15.0 0.0.0.255 192.168.18.0 0.0.0.15
+!
+crypto isakmp policy 10
+ encryption aes 256
+ hash sha
+ authentication pre-share
+ group 5
+!
+crypto isakmp key VPNKEY address 100.200.190.9
+crypto isakmp key VPNKEY address 100.200.190.13
+!
+crypto ipsec transform-set ENGSERVER esp-aes 256 esp-sha-hmac
+!
+crypto map ENGSERVER 10 ipsec-isakmp
+ set peer 100.200.190.9
+ set transform-set ENGSERVER
+ match address 100
+!
+interface GigabitEthernet0/0
+ crypto map ENGSERVER</code></pre>
+
+  <h3>XYZ-SERVER-R Yapılandırması</h3>
+  <pre><code>license boot module c2900 technology-package securityk9
+!
+access-list 100 permit ip 192.168.16.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 100 permit ip 192.168.16.0 0.0.0.255 192.168.11.0 0.0.0.255
+access-list 100 permit ip 192.168.16.0 0.0.0.255 192.168.12.0 0.0.0.255
+access-list 100 permit ip 192.168.16.0 0.0.0.255 192.168.13.0 0.0.0.255
+access-list 100 permit ip 192.168.16.0 0.0.0.255 192.168.14.0 0.0.0.255
+access-list 100 permit ip 192.168.16.0 0.0.0.255 192.168.15.0 0.0.0.255
+access-list 100 permit ip 192.168.17.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 100 permit ip 192.168.17.0 0.0.0.255 192.168.11.0 0.0.0.255
+access-list 100 permit ip 192.168.17.0 0.0.0.255 192.168.12.0 0.0.0.255
+access-list 100 permit ip 192.168.17.0 0.0.0.255 192.168.13.0 0.0.0.255
+access-list 100 permit ip 192.168.17.0 0.0.0.255 192.168.14.0 0.0.0.255
+access-list 100 permit ip 192.168.17.0 0.0.0.255 192.168.15.0 0.0.0.255
+access-list 100 permit ip 192.168.18.0 0.0.0.15 192.168.10.0 0.0.0.255
+access-list 100 permit ip 192.168.18.0 0.0.0.15 192.168.11.0 0.0.0.255
+access-list 100 permit ip 192.168.18.0 0.0.0.15 192.168.12.0 0.0.0.255
+access-list 100 permit ip 192.168.18.0 0.0.0.15 192.168.13.0 0.0.0.255
+access-list 100 permit ip 192.168.18.0 0.0.0.15 192.168.14.0 0.0.0.255
+access-list 100 permit ip 192.168.18.0 0.0.0.15 192.168.15.0 0.0.0.255
+!
+crypto isakmp policy 10
+ encryption aes 256
+ hash sha
+ authentication pre-share
+ group 5
+!
+crypto isakmp key VPNKEY address 100.200.190.1
+crypto isakmp key VPNKEY address 100.200.190.5
+!
+crypto ipsec transform-set SERVERENG esp-aes 256 esp-sha-hmac
+!
+crypto map SERVERENG 10 ipsec-isakmp
+ set peer 100.200.190.1
+ set transform-set SERVERENG
+ match address 100
+!
+interface GigabitEthernet0/0
+ crypto map SERVERENG</code></pre>
+</section>
+
+<!-- ==================== SECTION 7 ==================== -->
+<section class="page" id="s7">
+  <h1>7. Test Aşaması</h1>
+
+  <h2 id="s7-1">7.1 DHCP IP Atamasının Doğrulanması</h2>
+  <p>DHCP IP atamasının başarıyla yapıldığı doğrulanmıştır.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-2">7.2 DNS Test</h2>
+  <p>'erü.öbs' yazarak domain name'i IP adresine dönüştürüp, bunun sonucunda bize bir web sayfası veriyor.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-3">7.3 PAT / NAT Test</h2>
+  <p>Dışarıdan bağlanan bir kişi için, WEB Server'a erişirken PAT yapılandırması doğrulanmıştır.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-4">7.4 VPN Test</h2>
+  <p>Tracert komutu gittiğimiz yere gidene kadar olan rotayı gösterir. Bilgisayar Mühendisliği PC'den Bilgi İşlem PC'ye ulaşırken VPN öncesi ve sonrası trace route karşılaştırılmıştır.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-5">7.5 HSRP Test</h2>
+  <p>HSRP'in aktif olan tarafı yapılandırma kontrolü yapılmıştır.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-6">7.6 VoIP Test</h2>
+
+  <h3 id="s7-6-1">7.6.1 Hat Numarası Atanmasının Kontrolü</h3>
+  <p>Hat numaralarının telefonlara başarıyla atandığı kontrol edilmiştir.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h3 id="s7-6-2">7.6.2 Fakülteler Arası İletişim Kontrolü</h3>
+  <p>Fakülteler arası VoIP iletişiminin başarıyla gerçekleştiği doğrulanmıştır.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-7">7.7 ICMP ile Fakültelerin İletişim Kontrolü</h2>
+  <p>ICMP (Internet Control Message Protocol), Network katmanında çalışan ve veri taşıyan IP paketlerinin aksine, IP protokolü içine gömülerek hata ve durum mesajlarını ileten bir kontrol protokolüdür. Ping ise bu protokolü kullanarak hedef cihaza (genelde 4 adet) kontrol paketi gönderir ve cihazın ağ üzerinde aktif olup olmadığını test eder. Bilgisayar Mühendisliği PC'den TDE'ye ulaşım sağlanmıştır.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+
+  <h2 id="s7-8">7.8 SSH Kontrol Testi</h2>
+  <p>SSH ile uzaktan bağlanmak için: ssh / -l / domain name / ping atılacak adres. Yazılım mühendisliği tarafından SSH bağlantısı isteği reddedilmiş, Bilgi İşlem bilgisayarından SSH bağlantısı başarıyla gerçekleştirilmiştir.</p>
+  <div class="placeholder">Test ekran görüntüsü için PDF dosyasına bakınız.</div>
+</section>
+
+<script>
+  // JavaScript-based page numbering for screen display
+  document.addEventListener('DOMContentLoaded', function() {
+    var pages = document.querySelectorAll('section.page');
+    var pageNum = 0;
+    pages.forEach(function(page) {
+      if (page.classList.contains('cover')) return;
+      pageNum++;
+    });
+  });
+</script>
+
+</body>
+</html>
