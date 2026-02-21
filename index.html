@@ -55,17 +55,17 @@
     margin-bottom: 30px;
   }
 
-  section.page:not(.cover)::after {
-    content: counter(page-counter);
-    position: absolute;
-    top: 60px;
-    right: 80px;
-    font-size: 10pt;
-    color: var(--primary);
-    font-weight: bold;
+  @media print {
+    section.page:not(.cover)::after {
+      content: counter(page-counter);
+      position: absolute;
+      top: 60px;
+      right: 80px;
+      font-size: 10pt;
+      color: var(--primary);
+      font-weight: bold;
+    }
   }
-
-  section.cover::after { display: none; }
 
   /* Cover page */
   .cover {
@@ -1146,13 +1146,17 @@ interface GigabitEthernet0/0
 </section>
 
 <script>
-  // JavaScript-based page numbering for screen display
   document.addEventListener('DOMContentLoaded', function() {
     var pages = document.querySelectorAll('section.page');
     var pageNum = 0;
     pages.forEach(function(page) {
       if (page.classList.contains('cover')) return;
       pageNum++;
+      var num = document.createElement('span');
+      num.textContent = pageNum;
+      num.style.cssText = 'position:absolute;top:60px;right:80px;font-size:10pt;color:#1B3A4B;font-weight:bold;font-family:Georgia,serif;';
+      page.style.position = 'relative';
+      page.appendChild(num);
     });
   });
 </script>
