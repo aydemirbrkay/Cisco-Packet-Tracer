@@ -1,0 +1,65 @@
+! =========================================
+! Distribution Layer - VLAN ve Trunk
+! ENG-MLS2 Yapılandırması
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+
+configure terminal
+
+! -----------------------------------------
+! Trunk Portları
+! -----------------------------------------
+interface range gigabitEthernet 1/0/2-14
+  switchport mode trunk
+exit
+
+! -----------------------------------------
+! Mühendislik Fakültesi VLAN Tanımlamaları
+! -----------------------------------------
+vlan 10
+  name insaat
+exit
+vlan 20
+  name makine
+exit
+vlan 30
+  name ee
+exit
+vlan 40
+  name bilgisayar
+exit
+vlan 50
+  name yazilim
+exit
+vlan 60
+  name endustri
+exit
+vlan 70
+  name cevre
+exit
+vlan 80
+  name mekat
+exit
+vlan 90
+  name harita
+exit
+vlan 100
+  name biyomed
+exit
+vlan 110
+  name gida
+exit
+vlan 120
+  name tekstil
+exit
+vlan 130
+  name enerji
+exit
+vlan 199
+  name BLACKHOLE
+exit
+vlan 200
+  name VOICE
+exit
+
+do write memory

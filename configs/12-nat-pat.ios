@@ -1,0 +1,22 @@
+! =========================================
+! NAT/PAT Yapılandırması
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+! Overload: Birden fazla kullanıcı aynı anda
+! tek public IP ile dışarı çıkabilir
+
+configure terminal
+
+access-list 1 permit 192.168.1.0 0.0.0.255
+
+ip nat inside source list 1 interface Serial0/0/0 overload
+
+interface GigabitEthernet0/0
+  ip nat inside
+exit
+
+interface Serial0/0/0
+  ip nat outside
+exit
+
+do write memory

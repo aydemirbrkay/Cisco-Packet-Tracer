@@ -1,0 +1,17 @@
+! =========================================
+! STP PortFast + BPDU Guard Yapılandırması
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+! Sadece uç (edge) cihaz portlarında kullanılmalıdır
+! Trunk veya switch bağlantı portlarında KULLANILMAMALIDIR
+!
+! Uygulanacak cihazlar: PC, IP telefon, printer, AP, WLC
+
+configure terminal
+
+interface gigabitEthernet 1/0/6
+  spanning-tree portfast
+  spanning-tree bpduguard enable
+exit
+
+do write memory

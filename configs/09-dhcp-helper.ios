@@ -1,0 +1,122 @@
+! =========================================
+! DHCP Helper (ip helper-address)
+! Mühendislik Fakültesi MLS Yapılandırması
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+
+configure terminal
+ip routing
+
+! -----------------------------------------
+! İnşaat Mühendisliği - VLAN 10
+! -----------------------------------------
+interface vlan 10
+  ip address 192.168.10.1 255.255.255.0
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Makine Mühendisliği - VLAN 20
+! -----------------------------------------
+interface vlan 20
+  ip address 192.168.11.1 255.255.255.0
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Elektrik-Elektronik Mühendisliği - VLAN 30
+! -----------------------------------------
+interface vlan 30
+  ip address 192.168.12.1 255.255.255.0
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Bilgisayar Mühendisliği - VLAN 40
+! -----------------------------------------
+interface vlan 40
+  ip address 192.168.13.1 255.255.255.0
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Yazılım Mühendisliği - VLAN 50
+! -----------------------------------------
+interface vlan 50
+  ip address 192.168.14.1 255.255.255.192
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Endüstri Mühendisliği - VLAN 60
+! -----------------------------------------
+interface vlan 60
+  ip address 192.168.14.65 255.255.255.192
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Çevre Mühendisliği - VLAN 70
+! -----------------------------------------
+interface vlan 70
+  ip address 192.168.14.129 255.255.255.192
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Mekatronik Mühendisliği - VLAN 80
+! -----------------------------------------
+interface vlan 80
+  ip address 192.168.14.193 255.255.255.192
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Harita Mühendisliği - VLAN 90
+! -----------------------------------------
+interface vlan 90
+  ip address 192.168.15.1 255.255.255.224
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Biyomedikal Mühendisliği - VLAN 100
+! -----------------------------------------
+interface vlan 100
+  ip address 192.168.15.33 255.255.255.224
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Gıda Mühendisliği - VLAN 110
+! -----------------------------------------
+interface vlan 110
+  ip address 192.168.15.65 255.255.255.224
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Tekstil Mühendisliği - VLAN 120
+! -----------------------------------------
+interface vlan 120
+  ip address 192.168.15.97 255.255.255.224
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Enerji Mühendisliği - VLAN 130
+! -----------------------------------------
+interface vlan 130
+  ip address 192.168.15.129 255.255.255.224
+  ip helper-address 192.168.18.11
+exit
+
+! -----------------------------------------
+! Voice VLAN 200
+! -----------------------------------------
+interface vlan 200
+  ip address 10.10.201.2 255.255.255.0
+  ip helper-address 10.10.200.1
+exit
+
+do write memory
