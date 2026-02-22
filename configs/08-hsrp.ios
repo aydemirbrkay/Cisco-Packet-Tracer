@@ -1,0 +1,75 @@
+! =========================================
+! HSRP Yapılandırması
+! EDB-MLS1 ve EDB-MLS2
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+
+! -----------------------------------------
+! EDB-MLS1 - HSRP (Priority 110 - Active)
+! -----------------------------------------
+configure terminal
+ip routing
+
+interface vlan 250
+  ip address 192.168.21.3 255.255.255.192
+  ip helper-address 192.168.18.12
+  standby version 2
+  standby 250 ip 192.168.21.1
+  standby 250 priority 110
+  standby 250 preempt
+exit
+
+interface vlan 260
+  ip address 192.168.21.67 255.255.255.192
+  ip helper-address 192.168.18.12
+  standby version 2
+  standby 260 ip 192.168.21.65
+  standby 260 priority 110
+  standby 260 preempt
+exit
+
+interface vlan 300
+  ip address 10.10.20.3 255.255.0.0
+  ip helper-address 192.168.18.12
+  standby version 2
+  standby 300 ip 10.10.20.1
+  standby 300 priority 110
+  standby 300 preempt
+exit
+
+do write memory
+
+! -----------------------------------------
+! EDB-MLS2 - HSRP (Priority 100 - Standby)
+! -----------------------------------------
+configure terminal
+ip routing
+
+interface vlan 250
+  ip address 192.168.21.4 255.255.255.192
+  ip helper-address 192.168.18.12
+  standby version 2
+  standby 250 ip 192.168.21.1
+  standby 250 priority 100
+  standby 250 preempt
+exit
+
+interface vlan 260
+  ip address 192.168.21.68 255.255.255.192
+  ip helper-address 192.168.18.12
+  standby version 2
+  standby 260 ip 192.168.21.65
+  standby 260 priority 100
+  standby 260 preempt
+exit
+
+interface vlan 300
+  ip address 10.10.20.4 255.255.0.0
+  ip helper-address 192.168.18.12
+  standby version 2
+  standby 300 ip 10.10.20.1
+  standby 300 priority 100
+  standby 300 preempt
+exit
+
+do write memory

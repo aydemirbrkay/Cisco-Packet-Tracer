@@ -1,0 +1,70 @@
+# =========================
+# LaTeX Build Artifacts
+# =========================
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.ist
+*.acn
+*.acr
+*.alg
+*.glg
+*.xdy
+docs/*.pdf
+!docs/main.pdf
+
+# =========================
+# Cisco Packet Tracer Files
+# =========================
+# Uncomment below if you don't want to track .pkt files
+# *.pkt
+# *.pkz
+
+# =========================
+# OS Generated Files
+# =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# =========================
+# Editor Files
+# =========================
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.bak
+*.orig

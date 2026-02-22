@@ -1,0 +1,18 @@
+! =========================================
+! Port Security - Finans ve Bilgi İşlem
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+! MAC adresi tabanlı güvenlik
+! Maksimum 2 cihaz / port
+! İhlal durumunda port kapanır (shutdown)
+
+configure terminal
+
+interface range fastEthernet 0/3-24
+  switchport port-security
+  switchport port-security mac-address sticky
+  switchport port-security maximum 2
+  switchport port-security violation shutdown
+exit
+
+do write memory

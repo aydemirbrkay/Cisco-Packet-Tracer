@@ -1,0 +1,58 @@
+! =========================================
+! Access Layer - VLAN ve TRUNK Yapılandırması
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+
+! -----------------------------------------
+! VLAN Tanımlamaları
+! -----------------------------------------
+vlan 10
+  name DATA
+exit
+vlan 200
+  name VOICE
+exit
+vlan 199
+  name BLACKHOLE
+exit
+
+! -----------------------------------------
+! Trunk Portları (Switch-to-MLS)
+! -----------------------------------------
+interface range fastEthernet 0/1-2
+  switchport mode trunk
+exit
+
+! -----------------------------------------
+! Access ve Voice VLAN Atamaları
+! -----------------------------------------
+interface range fastEthernet 0/3-24
+  switchport mode access
+  switchport access vlan 10
+  switchport voice vlan 200
+exit
+
+! -----------------------------------------
+! Blackhole VLAN - Kullanılmayan Portlar
+! -----------------------------------------
+interface range gigabitEthernet 0/1-2
+  switchport access vlan 199
+  shutdown
+exit
+
+do write memory
+
+! =========================================
+! WLAN VLAN Yapılandırması
+! (Tıp ve Edebiyat Fakülteleri için)
+! =========================================
+vlan 310
+  name WLAN
+exit
+
+interface range fastEthernet 0/19-24
+  switchport mode access
+  switchport access vlan 310
+exit
+
+do write memory

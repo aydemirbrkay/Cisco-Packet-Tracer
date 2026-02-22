@@ -1,0 +1,89 @@
+! =========================================
+! Site-to-Site IPsec VPN Yapılandırması
+! XYZ-ENG-R <-> XYZ-SERVER-R
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+
+! -----------------------------------------
+! XYZ-ENG-R Tarafı
+! -----------------------------------------
+
+! Security lisansını etkinleştirme
+! license boot module c2900 technology-package securityk9
+! copy running-config startup-config
+! reload
+
+configure terminal
+
+! --- ACL: VPN trafiği tanımı ---
+access-list 100 permit ip 192.168.10.0 0.0.1.255 192.168.16.0 0.0.3.255
+access-list 100 permit ip 192.168.12.0 0.0.1.255 192.168.16.0 0.0.3.255
+access-list 100 permit ip 192.168.14.0 0.0.1.255 192.168.16.0 0.0.3.255
+access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.16.0 0.0.3.255
+access-list 100 permit ip 192.168.21.0 0.0.0.255 192.168.16.0 0.0.3.255
+
+! --- ISAKMP Phase 1 ---
+crypto isakmp policy 10
+  encryption aes 128
+  authentication pre-share
+  group 5
+exit
+
+crypto isakmp key vpn address 100.200.200.2
+
+! --- IPsec Phase 2 ---
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+
+! --- Crypto Map ---
+crypto map VPN-MAP 10 ipsec-isakmp
+  description VPN connection to XYZ-SERVER-R
+  set peer 100.200.200.2
+  set transform-set VPN-SET
+  match address 100
+exit
+
+! --- Interface'e uygulama ---
+interface serial 0/1/0
+  crypto map VPN-MAP
+exit
+
+do write memory
+
+! -----------------------------------------
+! XYZ-SERVER-R Tarafı
+! -----------------------------------------
+configure terminal
+
+! --- ACL: VPN trafiği tanımı ---
+access-list 100 permit ip 192.168.16.0 0.0.3.255 192.168.10.0 0.0.1.255
+access-list 100 permit ip 192.168.16.0 0.0.3.255 192.168.12.0 0.0.1.255
+access-list 100 permit ip 192.168.16.0 0.0.3.255 192.168.14.0 0.0.1.255
+access-list 100 permit ip 192.168.16.0 0.0.3.255 192.168.20.0 0.0.0.255
+access-list 100 permit ip 192.168.16.0 0.0.3.255 192.168.21.0 0.0.0.255
+
+! --- ISAKMP Phase 1 ---
+crypto isakmp policy 10
+  encryption aes 128
+  authentication pre-share
+  group 5
+exit
+
+crypto isakmp key vpn address 100.200.200.1
+
+! --- IPsec Phase 2 ---
+crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac
+
+! --- Crypto Map ---
+crypto map VPN-MAP 10 ipsec-isakmp
+  description VPN connection to XYZ-ENG-R
+  set peer 100.200.200.1
+  set transform-set VPN-SET
+  match address 100
+exit
+
+! --- Interface'e uygulama ---
+interface serial 0/1/0
+  crypto map VPN-MAP
+exit
+
+do write memory

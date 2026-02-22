@@ -1,0 +1,44 @@
+! =========================================
+! TEMEL CİHAZ YAPILANDIRMASI
+! (Basic Device Configuration)
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+! Her switch için hostname değiştirilmelidir
+
+enable
+configure terminal
+
+hostname <HOSTNAME>-sw
+
+line console 0
+  password cisco
+  login
+exit
+
+enable secret cisco
+banner motd !! yalnizca bilgi islem tarafindan erisilebilir !!
+no ip domain-lookup
+service password-encryption
+
+! =========================================
+! SSH Yapılandırması
+! =========================================
+ip domain-name xyz.net
+username admin password cisco
+crypto key generate rsa
+1024
+ip ssh version 2
+
+! =========================================
+! ACL: Sadece Bilgi İşlem Erişimi
+! =========================================
+access-list 2 permit 192.168.16.0 0.0.0.255
+access-list 2 deny any
+
+line vty 0 15
+  login local
+  transport input ssh
+  access-class 2 in
+exit
+
+do write memory

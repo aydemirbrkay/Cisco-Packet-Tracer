@@ -1,0 +1,29 @@
+! =========================================
+! LACP - EtherChannel Yapılandırması
+! ENG-MLS1 <-> ENG-MLS2
+! Erciyes Üniversitesi Kampüs Ağı
+! =========================================
+
+! -----------------------------------------
+! ENG-MLS1 (Active Mode)
+! -----------------------------------------
+! ENG-MLS1(config)#
+interface range gigabitEthernet 1/0/15-17
+  channel-group 1 mode active
+exit
+interface Port-channel 1
+  switchport mode trunk
+exit
+do write memory
+
+! -----------------------------------------
+! ENG-MLS2 (Passive Mode)
+! -----------------------------------------
+! ENG-MLS2(config)#
+interface range gigabitEthernet 1/0/15-17
+  channel-group 1 mode passive
+exit
+interface Port-channel 1
+  switchport mode trunk
+exit
+do write memory
